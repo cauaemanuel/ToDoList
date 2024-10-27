@@ -29,24 +29,8 @@ public class TaskController {
 
     @PostMapping("/")
     public ResponseEntity create(@RequestBody TaskDTO taskDTO, HttpServletRequest request) throws Exception {
-
         Task result = service.create(taskDTO, request);
         return ResponseEntity.status(HttpStatus.OK).body(result);
-
-       /* var iduser = request.getAttribute("userID");
-        LocalDateTime currentDate = LocalDateTime.now();
-
-        if(currentDate.isAfter(task.getStartAt()) || currentDate.isAfter(task.getEndAt())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A data de inicio / data de termino deve ser maior que a atual");
-        }
-
-        if(task.getStartAt().isAfter(task.getEndAt())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A data de inicio deve ser menor que a data de termino");
-        }
-
-        task.setUserID((Integer) iduser);
-        Task varTask = repository.save(task);
-        return ResponseEntity.status(HttpStatus.OK).body(varTask);*/
 
     }
 
@@ -57,28 +41,8 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public ResponseEntity update(@RequestBody TaskDTO taskModel, @PathVariable Integer id, HttpServletRequest request) throws Exception {
-
         Task resultUpdate = service.update(taskModel, id, request);
         return ResponseEntity.ok().body(resultUpdate);
 
-        /* Task task = repository.findById(id).orElse(null);
-
-        if(task == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("tarefa esta vazia");
-        }
-
-        var idUser = request.getAttribute("userID");
-
-        if(!task.getUserID().equals(idUser)){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Usuario nao tem permissao para altura essa tarefa");
-        }
-
-        Task saveTask = mapper.atualizarTask(taskModel, task);
-
-        Task result = repository.save(saveTask);
-
-        return ResponseEntity.ok().body(result);*/
     }
 }

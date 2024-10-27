@@ -29,15 +29,5 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
 
-        /*User user1 = repository.findByUsername(user.getUsername());
-        if (user1 != null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario ja existe");
-        }
-
-        String passwordHashed = BCrypt.withDefaults().hashToString(12, user.getPassword().toCharArray());
-        user.setPassword(passwordHashed);
-
-        User userCreated = repository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);*/
     }
 }
