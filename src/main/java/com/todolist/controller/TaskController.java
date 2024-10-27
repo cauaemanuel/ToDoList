@@ -4,6 +4,7 @@ import com.todolist.entities.Task;
 import com.todolist.mapDTO.TaskDTO;
 import com.todolist.repository.TaskRepository;
 import com.todolist.mapDTO.MapperDTO;
+import com.todolist.service.TaskService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,18 @@ public class TaskController {
     private TaskRepository repository;
 
     @Autowired
+    private TaskService service;
+
+    @Autowired
     private MapperDTO mapper;
 
     @PostMapping("/")
-    public ResponseEntity create(@RequestBody Task task, HttpServletRequest request){
-        var iduser = request.getAttribute("userID");
+    public ResponseEntity create(@RequestBody TaskDTO taskDTO, HttpServletRequest request) throws Exception {
 
+        Task result = service.create(taskDTO, request);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+
+       /* var iduser = request.getAttribute("userID");
         LocalDateTime currentDate = LocalDateTime.now();
 
         if(currentDate.isAfter(task.getStartAt()) || currentDate.isAfter(task.getEndAt())){
@@ -39,19 +46,22 @@ public class TaskController {
 
         task.setUserID((Integer) iduser);
         Task varTask = repository.save(task);
-        return ResponseEntity.status(HttpStatus.OK).body(varTask);
+        return ResponseEntity.status(HttpStatus.OK).body(varTask);*/
 
     }
 
     @GetMapping("/")
     public List<Task> list(HttpServletRequest request){
-        List<Task> tasks = repository.findByUserID((Integer)request.getAttribute("userID"));
-        return tasks;
+       return service.list(request);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity update(@RequestBody TaskDTO taskModel, @PathVariable Integer id, HttpServletRequest request) throws Exception {
-        Task task = repository.findById(id).orElse(null);
+
+        Task resultUpdate = service.update(taskModel, id, request);
+        return ResponseEntity.ok().body(resultUpdate);
+
+        /* Task task = repository.findById(id).orElse(null);
 
         if(task == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -69,6 +79,6 @@ public class TaskController {
 
         Task result = repository.save(saveTask);
 
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.ok().body(result);*/
     }
 }

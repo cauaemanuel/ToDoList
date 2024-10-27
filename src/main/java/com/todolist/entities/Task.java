@@ -27,7 +27,7 @@ public class Task {
 
     private Integer userID;
 
-    public void setTitle(String title) throws Exception{
+    public void setTitle(String title) throws RuntimeException{
         if(title.length() > 50){
             throw new RuntimeException("O campo title deve conter no maximo 50 characteres");
         }

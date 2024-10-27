@@ -15,4 +15,6 @@ public interface MapperDTO {
 
     User userDTOtoUser(UserDTO userDto);
 
+    Task taskDTOtoTask(TaskDTO taskdto) throws Exception;
+
 }
